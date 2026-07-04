@@ -14,7 +14,7 @@ This repository contains the dataset and source code for the paper **"Reshaping 
 ## Datasets
 
 The models and experiments are evaluated on the following classic and high-dimensional chaotic dynamical systems. 
-> **Note:** The references and detailed descriptions for the four datasets (**Hadcet** and **PEMS-BAY**) used in our experiments have been formally cited and elaborated in the main manuscript.
+> **Note:** The references and detailed descriptions for the four datasets used in our experiments have been formally cited and elaborated in the main manuscript.
 ### 1. Lorenz System
 The 3D Lorenz system is governed by the following differential equations:
 
