@@ -567,7 +567,7 @@ def plot_figure(pred_test,test_output,number,Lt=1,dt=0.1,name=None,index=0,Etsta
     # plt.plot(t)
     plt.show()
     t = np.arange(0, test_output.shape[0]*dt,dt)
-    t=t/Lt    
+    t=t*Lt    
     t=t[:number]
     # Etstander=0.5#the given error criterion 
     if np.where(Et>=Etstander)[0].shape[0]>0:
