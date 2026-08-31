@@ -25,16 +25,22 @@ from node_feature_importance import *
 
 data_names=['Lorenz','hyper_chaotic','hadcet','Pems_bay']
 
+# data_names = ['Lorenz', 'Rossler', 'Henon', 'M_G', 'hadcet', 'ECG5000','Lorenz_96', 'hyper_chaotic', 'ETTh1', 'Metr_la', 'Pems_bay', 'R_F']
+
+Lyapunov_E={'Lorenz':0.895,'Rossler':0.071,'Henon':0.419,'M_G':1,'hadcet':1,'ECG5000':1,'Lorenz_96':1.68,'hyper_chaotic':3.03,'ETTh1':1,'Metr_la':1,'Pems_bay':1,'R_F':0.17}
+Data_Length={'Lorenz':20000,'Rossler':20000,'Henon':20000,'M_G':20000,'hadcet':4343,'ECG5000':5000,'Lorenz_96':20000,'hyper_chaotic':20000,'ETTh1':17420,'Metr_la':34272,
+'Pems_bay':52116,'R_F':20000}
+L_train_0={'Lorenz':16000,'Rossler':16000,'Henon':16000,'M_G':12000,'hadcet':4260,'ECG5000':4000,'Lorenz_96':16000,'hyper_chaotic':16000,'ETTh1':11520,'Metr_la':2880,#原来23990 95天 大概80%
+'Pems_bay':10*24*12,'R_F':10000}#145天，大概80%}
+L_test_0={'Lorenz':2000,'Rossler':4000,'Henon':100,'M_G':300,'hadcet':83,'ECG5000':1000,'Lorenz_96':20,'hyper_chaotic':1000,'ETTh1':60, 'Metr_la':60,
+ 'Pems_bay':1200,'R_F':1000}
+transient_0={'Lorenz':1000,'Rossler':1000,'Henon':1000,'M_G':1000,'hadcet':852,'ECG5000':1000,'Lorenz_96':1000,'hyper_chaotic':1000,'ETTh1':720,'Metr_la':1440,#80*24*12
+'Pems_bay':5*24*12,'R_F':1000}#min}
+DT={'Lorenz':0.01,'Rossler':0.01,'Henon':1,'M_G':1,'hadcet':1,'ECG5000':1,'Lorenz_96':0.01,'hyper_chaotic':0.1,'ETTh1':1,'Metr_la':1,'Pems_bay':1,'R_F':0.01}
+#ECG 可以用于分类
+N_dim={'Lorenz':3,'Rossler':3,'Henon':2,'M_G':1,'hadcet':1,'ECG5000':140,'Lorenz_96':40,'hyper_chaotic':4,'ETTh1':7,'Metr_la':207,'Pems_bay':325,'R_F':3} 
 
 
-data_names=['Lorenz','hyper_chaotic','hadcet','Pems_bay']; 
-Lyapunov_E={'Lorenz':0.895,'hyper_chaotic':3.03,'hadcet':1,'Pems_bay':1}; 
-Data_Length={'Lorenz':20000,'hyper_chaotic':20000,'hadcet':4343,'Pems_bay':52116}; 
-L_train_0={'Lorenz':16000,'hyper_chaotic':16000,'hadcet':4260,'Pems_bay':10 * 24 * 12}; 
-L_test_0={'Lorenz':3000,'hyper_chaotic':1000,'hadcet':83,'Pems_bay':600}; 
-transient_0={'Lorenz':1000,'hyper_chaotic':1000,'hadcet':600,'Pems_bay':5 * 24 * 12}; 
-DT={'Lorenz':0.01,'hyper_chaotic':0.1,'hadcet':1,'Pems_bay':1}; 
-N_dim={'Lorenz':3,'hyper_chaotic':4,'hadcet':1,'Pems_bay':325}
 
 
 #网络结构类型
@@ -166,14 +172,13 @@ if j==4:#MCI-ESN 两个极简 Reservoir
    v1=(rng.rand(1)*delta).item()
    v2=(rng.rand(1)*delta).item()
    signs = [-1, 1]
-   sign_matrix = np.random.choice(signs, size=(int(Dr/2), N))
-   #随机初始化--z=0 传统，z=1 高阶
-   z=1
-   if z==0:
-       W_in_00=np.ones((Dr,N))
-       W_in_0=np.ones((Dr,N))
-       W_in_0[:int(Dr/2),:]=sign_matrix*(v1-v2)
-       W_in_0[int(Dr/2):,:]=sign_matrix*(v1+v2)
+   sign_matrix_1 = np.random.choice(signs, size=(int(Dr/2), N))
+   sign_matrix_2 = np.random.choice(signs, size=(int(Dr/2), N))
+
+   W_in_00=np.ones((Dr,N))
+   W_in_0=np.ones((Dr,N))
+   W_in_0[:int(Dr/2),:]=sign_matrix_1*v1-sign_matrix_2*v2
+   W_in_0[int(Dr/2):,:]=sign_matrix_1*v1+sign_matrix_2*v2
        
        
    mu=(rng.rand(1)*RHO_R).item()
@@ -303,14 +308,14 @@ if j==4:#MCI-ESN 两个极简 Reservoir
    v1=(rng.rand(1)*delta).item()
    v2=(rng.rand(1)*delta).item()
    signs = [-1, 1]
-   sign_matrix = np.random.choice(signs, size=(int(Dr/2), N))
-   #随机初始化--z=0 传统，z=1 高阶
-   z=1
-   if z==0:
-       W_in_00=np.ones((Dr,N))
-       W_in_0=np.ones((Dr,N))
-       W_in_0[:int(Dr/2),:]=sign_matrix*(v1-v2)
-       W_in_0[int(Dr/2):,:]=sign_matrix*(v1+v2)
+   sign_matrix_1 = np.random.choice(signs, size=(int(Dr/2), N))
+   sign_matrix_2 = np.random.choice(signs, size=(int(Dr/2), N))
+
+
+    W_in_00=np.ones((Dr,N))
+    W_in_0=np.ones((Dr,N))
+    W_in_0[:int(Dr/2),:]=sign_matrix_1*v1-sign_matrix_2*v2
+    W_in_0[int(Dr/2):,:]=sign_matrix_1*v1+sign_matrix_2*v2
        
        
    mu=(rng.rand(1)*RHO_R).item()
@@ -321,7 +326,6 @@ if j==4:#MCI-ESN 两个极简 Reservoir
    R_network[int(Dr/2),Dr-1]=RHO_R-mu
    R_network[Dr-1,int(Dr/2)]=RHO_R-mu
    Dr=int(Dr/2)
-   b=0
  
 Index_node_importance=2
 
@@ -333,13 +337,13 @@ else:
 mid_time_1 = time.time()
 
 RC=RCs(
-        N = N,
+        N = N,a
         Dr =300,
-        rho=0.7,
+        rho=0.7,s
         delta=0.1,
         b=0.1,
         transient= transient,
-        R_network=np.round(R_network,Data_precision),
+        R_network=np.round(R_network,Data_precision),                                               
         W_in=np.round(W_in,Data_precision),
         RC_index=j,
         leaky_rate=0.1
