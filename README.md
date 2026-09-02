@@ -48,6 +48,9 @@ $$
 ### 1. Leaky-RC
 
 The Leaky-RC model is defined as:
+## Leaky-RC
+
+The Leaky-RC model is defined as:
 
 $$
 x(t)
@@ -59,63 +62,69 @@ x(t)
 W_{bg}^{T}W_{in}u(t)
 +
 Wx(t-1)
-\right).
+\right)
 $$
 
-### 2. Deep RC
+
+## Deep RC
 
 For a Deep RC with $L$ reservoir layers, the first layer is defined as:
 
 $$
+\begin{aligned}
 x^{(1)}(t)
 =
-(1-\alpha_1)x^{(1)}(t-1)
-+
-\alpha_1\tanh
+&(1-\alpha_1)x^{(1)}(t-1) \\
+&+\alpha_1\tanh
 \left(
 W_{bg}^{(1)T}W_{in}^{(1)}u(t)
 +
 W^{(1)}x^{(1)}(t-1)
-\right).
+\right)
+\end{aligned}
 $$
 
 For the $l$-th layer $(l=2,\ldots,L)$:
 
 $$
+\begin{aligned}
 x^{(l)}(t)
 =
-(1-\alpha_l)x^{(l)}(t-1)
-+
-\alpha_l\tanh
+&(1-\alpha_l)x^{(l)}(t-1) \\
+&+\alpha_l\tanh
 \left(
 W_{bg}^{(l)T}W_{in}^{(l)}u(t)
 +
 W_p^{(l-1)}x^{(l-1)}(t)
 +
 W^{(l)}x^{(l)}(t-1)
-\right).
+\right)
+\end{aligned}
 $$
 
-### 3. ES$^2$N
+
+## ES$^2$N
 
 The ES$^2$N model is defined as:
 
 $$
+\begin{aligned}
 x(t)
 =
-\beta\tanh
+&\beta\tanh
 \left(
 \rho Wx(t-1)
 +
 W_{bg}^{T}W_{in}u(t)
 +
 b
-\right)
-+
-(1-\beta)Ox(t-1).
+\right) \\
+&+(1-\beta)Ox(t-1)
+\end{aligned}
 $$
 
-### 4. MCI-ESN
+
+## MCI-ESN
 
 The MCI-ESN model consists of two interacting reservoir modules:
 
@@ -129,7 +138,7 @@ W^{(1)}x^{(1)}(t-1)
 W_{bg}^{(1)T}W_{in}^{(1)}u(t)
 +
 W_{12}x^{(2)}(t-1)
-\right).
+\right)
 $$
 
 $$
@@ -142,7 +151,7 @@ W^{(2)}x^{(2)}(t-1)
 W_{bg}^{(2)T}W_{in}^{(2)}u(t)
 +
 W_{21}x^{(1)}(t-1)
-\right).
+\right)
 $$
 
 ## Hyperparameter Search Spaces
