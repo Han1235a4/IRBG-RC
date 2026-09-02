@@ -45,9 +45,111 @@ $$
 
 ## RC Variants and Hyperparameter Search Spaces
 
-| Model | State-update equation | Hyperparameter search space |
-|---|---|---|
-| **Leaky-RC** | $$x(t)=(1-\alpha)x(t-1)+\alpha\tanh\left(W_{bg}^{T}W_{in}u(t)+Wx(t-1)\right)$$ | $N\in\{100,200,300,400,500\}$; $\rho\in\{0.5,0.7,0.9,1.1,1.3,1.5\}$; input scaling $\alpha_{in}\in\{0.001,0.01,0.1,1.0\}$; leak rate $\alpha\in\{0.001,0.01,0.1,1.0\}$; $P\in[-1,1]$ |
-| **Deep RC** | First layer: $$x^{(1)}(t)=(1-\alpha_1)x^{(1)}(t-1)+\alpha_1\tanh\left(W_{bg}^{(1)T}W_{in}^{(1)}u(t)+W^{(1)}x^{(1)}(t-1)\right)$$ For $l=2,\ldots,L$: $$x^{(l)}(t)=(1-\alpha_l)x^{(l)}(t-1)+\alpha_l\tanh\left(W_{bg}^{(l)T}W_{in}^{(l)}u(t)+W_p^{(l-1)}x^{(l-1)}(t)+W^{(l)}x^{(l)}(t-1)\right)$$ | $N\in\{100,200,300,400,500\}$ per layer; $L\in\{2,4,5,10\}$; $\rho\in\{0.5,0.7,0.9,1.1,1.3,1.5\}$; input scaling $\alpha_{in}\in\{0.001,0.01,0.1,1.0\}$; leak rate $\alpha\in\{0.001,0.01,0.1,1.0\}$; $P\in[-1,1]$ |
-| **ES$^2$N** | $$x(t)=\beta\tanh\left(\rho Wx(t-1)+W_{bg}^{T}W_{in}u(t)+b\right)+(1-\beta)Ox(t-1)$$ | $N_r\in\{100,200,300,400,500\}$; $\rho\in\{0.5,0.7,0.9,1.1,1.3,1.5\}$; input scaling $\alpha_{in}\in\{1.0,0.1,0.01,0.001\}$; $\beta\in\{0.001,0.01,0.1,1.0\}$; bias scaling $\alpha_b\in\{1.0,0.1,0.01,0.001\}$; $P\in[-1,1]$ |
-| **MCI-ESN** | $$x^{(1)}(t)=\tanh\left(W^{(1)}x^{(1)}(t-1)+W_{bg}^{(1)T}W_{in}^{(1)}u(t)+W_{12}x^{(2)}(t-1)\right)$$ $$x^{(2)}(t)=\tanh\left(W^{(2)}x^{(2)}(t-1)+W_{bg}^{(2)T}W_{in}^{(2)}u(t)+W_{21}x^{(1)}(t-1)\right)$$ | $N\in\{100,200,300,400,500\}$ per reservoir module; $\rho\in\{0.5,0.7,0.9,1.1,1.3,1.5\}$; input scaling $\alpha_{in}\in\{0.001,0.01,0.1,1.0\}$; $P\in[-1,1]$ |
+### 1. Leaky-RC
+
+The Leaky-RC model is defined as:
+
+$$
+x(t)
+=
+(1-\alpha)x(t-1)
++
+\alpha\tanh
+\left(
+W_{bg}^{T}W_{in}u(t)
++
+Wx(t-1)
+\right).
+$$
+
+### 2. Deep RC
+
+For a Deep RC with $L$ reservoir layers, the first layer is defined as:
+
+$$
+x^{(1)}(t)
+=
+(1-\alpha_1)x^{(1)}(t-1)
++
+\alpha_1\tanh
+\left(
+W_{bg}^{(1)T}W_{in}^{(1)}u(t)
++
+W^{(1)}x^{(1)}(t-1)
+\right).
+$$
+
+For the $l$-th layer $(l=2,\ldots,L)$:
+
+$$
+x^{(l)}(t)
+=
+(1-\alpha_l)x^{(l)}(t-1)
++
+\alpha_l\tanh
+\left(
+W_{bg}^{(l)T}W_{in}^{(l)}u(t)
++
+W_p^{(l-1)}x^{(l-1)}(t)
++
+W^{(l)}x^{(l)}(t-1)
+\right).
+$$
+
+### 3. ES$^2$N
+
+The ES$^2$N model is defined as:
+
+$$
+x(t)
+=
+\beta\tanh
+\left(
+\rho Wx(t-1)
++
+W_{bg}^{T}W_{in}u(t)
++
+b
+\right)
++
+(1-\beta)Ox(t-1).
+$$
+
+### 4. MCI-ESN
+
+The MCI-ESN model consists of two interacting reservoir modules:
+
+$$
+x^{(1)}(t)
+=
+\tanh
+\left(
+W^{(1)}x^{(1)}(t-1)
++
+W_{bg}^{(1)T}W_{in}^{(1)}u(t)
++
+W_{12}x^{(2)}(t-1)
+\right).
+$$
+
+$$
+x^{(2)}(t)
+=
+\tanh
+\left(
+W^{(2)}x^{(2)}(t-1)
++
+W_{bg}^{(2)T}W_{in}^{(2)}u(t)
++
+W_{21}x^{(1)}(t-1)
+\right).
+$$
+
+## Hyperparameter Search Spaces
+
+| Model | Reservoir size | Depth $L$ | Spectral radius $\rho$ | Input scaling | Leak rate | $\beta$ | Bias scaling | $P$ |
+|---|---|---|---|---|---|---|---|---|
+| **Leaky-RC** | $\{100,200,300,400,500\}$ | -- | $\{0.5,0.7,0.9,1.1,1.3,1.5\}$ | $\{0.001,0.01,0.1,1.0\}$ | $\{0.001,0.01,0.1,1.0\}$ | -- | -- | $[-1,1]$ |
+| **Deep RC** | $\{100,200,300,400,500\}$ per layer | $\{2,4,5,10\}$ | $\{0.5,0.7,0.9,1.1,1.3,1.5\}$ | $\{0.001,0.01,0.1,1.0\}$ | $\{0.001,0.01,0.1,1.0\}$ | -- | -- | $[-1,1]$ |
+| **ES$^2$N** | $\{100,200,300,400,500\}$ | -- | $\{0.5,0.7,0.9,1.1,1.3,1.5\}$ | $\{1.0,0.1,0.01,0.001\}$ | -- | $\{0.001,0.01,0.1,1.0\}$ | $\{1.0,0.1,0.01,0.001\}$ | $[-1,1]$ |
+| **MCI-ESN** | $\{100,200,300,400,500\}$ per module | -- | $\{0.5,0.7,0.9,1.1,1.3,1.5\}$ | $\{0.001,0.01,0.1,1.0\}$ | -- | -- | -- | $[-1,1]$ |
