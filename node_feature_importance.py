@@ -293,7 +293,76 @@ def get_node_properties(G, weight='weight'):
     d_matrix_dict = dict(d_iter)
     
     return mass, d_matrix_dict
+def eigenvector_centrality_with_multiplicity(G, tol=1e-8):
+    """
+    Compute eigenvector centrality while explicitly handling
+    multiplicity of the largest eigenvalue.
 
+    If the largest eigenvalue is simple, its corresponding eigenvector
+    is returned. If the largest eigenvalue is repeated, the corresponding
+    eigenvectors are averaged.
+
+    Parameters
+    ----------
+    G : nx.Graph
+        Undirected weighted graph.
+    tol : float
+        Tolerance used to identify repeated largest eigenvalues.
+
+    Returns
+    -------
+    centrality : dict
+        Eigenvector centrality of each node.
+    lambda_max : float
+        Largest eigenvalue.
+    multiplicity : int
+        Numerical multiplicity of the largest eigenvalue.
+    """
+
+    nodes = list(G.nodes())
+    A = nx.to_numpy_array(G, nodelist=nodes, weight='weight', dtype=float)
+
+    # Since A is symmetric for an undirected graph, use eigh
+    eigenvalues, eigenvectors = np.linalg.eigh(A)
+
+    # Sort eigenvalues in descending order
+    idx = np.argsort(eigenvalues)[::-1]
+    eigenvalues = eigenvalues[idx]
+    eigenvectors = eigenvectors[:, idx]
+
+    lambda_max = eigenvalues[0]
+
+    # Identify all eigenvalues numerically equal to lambda_max
+    repeated_idx = np.where(
+        np.isclose(eigenvalues, lambda_max, rtol=tol, atol=tol)
+    )[0]
+
+    multiplicity = len(repeated_idx)
+
+    # Corresponding eigenvectors
+    V = eigenvectors[:, repeated_idx]
+
+    if multiplicity == 1:
+        centrality_vector = V[:, 0]
+    else:
+        # Average the eigenvectors corresponding to lambda_max
+        centrality_vector = np.mean(V, axis=1)
+
+    # Remove arbitrary global sign
+    if np.sum(centrality_vector) < 0:
+        centrality_vector = -centrality_vector
+
+    # Normalize
+    norm = np.linalg.norm(centrality_vector)
+    if norm > 0:
+        centrality_vector = centrality_vector / norm
+
+    centrality = {
+        node: centrality_vector[i]
+        for i, node in enumerate(nodes)
+    }
+
+    return centrality
 def calculate_node_centrality_from_matrix(adj_matrix_np, metric_index=0, f_beta=1.0, f_p=1.0, f_type='tanh'):
     """
     扩展后的节点中心性计算函数
@@ -335,7 +404,7 @@ def calculate_node_centrality_from_matrix(adj_matrix_np, metric_index=0, f_beta=
     # 1-6 经典指标
     if metric_index in [1, 2, 3, 4, 5, 6]:
         if metric_index == 1: scores_dict = nx.degree_centrality(G)
-        elif metric_index == 2: scores_dict = nx.eigenvector_centrality(G, max_iter=10000, weight='weight',tol=1e-4)
+        elif metric_index == 2: scores_dict =  eigenvector_centrality_with_multiplicity(G, tol=1e-8)
         elif metric_index == 3: scores_dict = nx.pagerank(G, alpha=0.85, weight='weight')
         elif metric_index == 4: scores_dict = nx.betweenness_centrality(G, weight='weight')
         elif metric_index == 5: scores_dict = nx.closeness_centrality(G, distance='weight')
