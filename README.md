@@ -72,7 +72,7 @@ x^{(l)}(t) = (1-\alpha_l)x^{(l)}(t-1) + \alpha_l\tanh\left( W_p^{(l-1)}x^{(l-1)}
 $$
 
 
-## ES^2N
+## **ES<sup>2</sup>N** 
 
 The ES$$^2$$N model is defined as:
 
@@ -83,7 +83,7 @@ x(t) = \beta\tanh\left(\rho Wx(t-1) + W_{bg}^{T}W_{in}u(t) + \gamma\mathbf{1}\ri
 $$
 
 
-## MCI-ESN
+c MCI-ESN
 
 The MCI-ESN model is defined as:
 
