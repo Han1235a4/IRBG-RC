@@ -74,7 +74,7 @@ $$
 
 ## **ES<sup>2</sup>N** 
 
-The ES$$^2$$N model is defined as:
+The ES<sup>2</sup>N model is defined as:
 
 $$
 \begin{cases}
@@ -83,7 +83,7 @@ x(t) = \beta\tanh\left(\rho Wx(t-1) + W_{bg}^{T}W_{in}u(t) + \gamma\mathbf{1}\ri
 $$
 
 
-c MCI-ESN
+## MCI-ESN
 
 The MCI-ESN model is defined as:
 
