@@ -4,7 +4,7 @@
 ![Hardware](https://img.shields.io/badge/GPU-RTX%203090%20Ti-green.svg)
 
 ## Overview
-This repository contains the dataset and source code for the paper **"Reshaping Input-to-Reservoir Topologies in Reservoir Computing via Bipartite Graph Generation"**. It provides the implementation of the proposed bipartite graph generation method (IRBG) for optimizing reservoir topologies, applied to the prediction of complex chaotic time series.
+This repository contains data generation formulas, train-test data splits, state-update equations, source code for the selected RCs, hardware specifications and other experimental setup details.
 
 ## Hardware & Environment
 * **CPU:** Intel Core i9-10980XE
