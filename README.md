@@ -60,10 +60,6 @@ $$
 
 The Leaky-RC model is defined as:
 
-## Leaky-RC
-
-The Leaky-RC model is defined as:
-
 $$
 \begin{cases}
 x(t) = (1-\alpha)x(t-1) + \alpha\tanh\left(W_{bg}^{T}W_{in}u(t) + Wx(t-1)+\gamma\mathbf{1}\right)
@@ -71,7 +67,7 @@ x(t) = (1-\alpha)x(t-1) + \alpha\tanh\left(W_{bg}^{T}W_{in}u(t) + Wx(t-1)+\gamma
 $$
 
 
-## Deep RC
+### 2. Deep RC
 
 For a Deep RC with $L$ reservoir layers, the state update is defined as:
 
@@ -83,7 +79,7 @@ x^{(l)}(t) = (1-\alpha_l)x^{(l)}(t-1) + \alpha_l\tanh\left( W_p^{(l-1)}x^{(l-1)}
 $$
 
 
-## **ES<sup>2</sup>N** 
+### 3.**ES<sup>2</sup>N** 
 
 The ES<sup>2</sup>N model is defined as:
 
@@ -94,7 +90,7 @@ x(t) = \beta\tanh\left(\rho Wx(t-1) + W_{bg}^{T}W_{in}u(t) + \gamma\mathbf{1}\ri
 $$
 
 
-## MCI-ESN
+### 4. MCI-ESN
 
 The MCI-ESN model is defined as:
 
@@ -116,14 +112,14 @@ $$
 | **MCI-ESN** | $\{100,200,300,400,500\}$ | -- | $\{0.1,0.3,0.5,0.7,0.9,1.1,1.3,1.5\}$ | $\{0.001,0.01,0.1,1.0\}$ | -- | -- | -- | $\{-1,...,-0.1,0,0.1,...,1\}$ |
 
 
-## Performance compare for two different datasets
+## Performance comparison for two different datasets
 | Architectures | Datasets | Correlation $P$ | Minimum RMSE $\downarrow$ |  | VPT (Mean) $\uparrow$ |  | $p$-value |
 |:--------------|:---------|----------------:|--------------------------:|:--:|-----------------------:|:--:|----------:|
 | | | | **Random** | **IRBG** | **Random** | **IRBG** | |
 | **Typical RC** | Lorenz-96 | -0.8 | 3.41 | **2.93** | 0.32(0.30)| **0.37(0.34)** | 0.001|
 | | ETTh1 | 1 | 4.85| **4.54** | 9(8.20)| **10(8.26)** | 0.04 |
 | **Leaky RC** | Lorenz-96 | 0.6 | 3.03 | **2.88** | 0.37(0.32) | **0.39(0.34)** |0.001 |
-| | ETTh1 | 0.5| --3.52 | **3.37** | 8(7.53)| **10(7.97)** | 0.01 |
+| | ETTh1 | 0.5| 3.52 | **3.37** | 8(7.53)| **10(7.97)** | 0.01 |
 | **DeepRC** | Lorenz-96 | -0.4 | 2.34 | **1.70** | 0.42(0.36) | **0.67(0.41)** | 0.0002|
 | | ETTh1 | 1| 4.66| **4.55** | 6(6.68) | **10(7.72)** | 0.002 |
 | **ES$^2$N** | Lorenz-96 | -0.2 | 3.09 | **2.92** | 0.35(0.32) | **0.40(0.33)** |0.001 |
