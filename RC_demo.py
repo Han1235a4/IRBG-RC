@@ -23,22 +23,14 @@ from sklearn.preprocessing import StandardScaler
 from node_feature_importance import *
 
 
-data_names=['Lorenz','hyper_chaotic','hadcet','Pems_bay']
-
-# data_names = ['Lorenz', 'Rossler', 'Henon', 'M_G', 'hadcet', 'ECG5000','Lorenz_96', 'hyper_chaotic', 'ETTh1', 'Metr_la', 'Pems_bay', 'R_F']
-
-Lyapunov_E={'Lorenz':0.895,'Rossler':0.071,'Henon':0.419,'M_G':1,'hadcet':1,'ECG5000':1,'Lorenz_96':1.68,'hyper_chaotic':3.03,'ETTh1':1,'Metr_la':1,'Pems_bay':1,'R_F':0.17}
-Data_Length={'Lorenz':20000,'Rossler':20000,'Henon':20000,'M_G':20000,'hadcet':4343,'ECG5000':5000,'Lorenz_96':20000,'hyper_chaotic':20000,'ETTh1':17420,'Metr_la':34272,
-'Pems_bay':52116,'R_F':20000}
-L_train_0={'Lorenz':16000,'Rossler':16000,'Henon':16000,'M_G':12000,'hadcet':4260,'ECG5000':4000,'Lorenz_96':16000,'hyper_chaotic':16000,'ETTh1':11520,'Metr_la':2880,#原来23990 95天 大概80%
-'Pems_bay':10*24*12,'R_F':10000}#145天，大概80%}
-L_test_0={'Lorenz':2000,'Rossler':4000,'Henon':100,'M_G':300,'hadcet':83,'ECG5000':1000,'Lorenz_96':20,'hyper_chaotic':1000,'ETTh1':60, 'Metr_la':60,
- 'Pems_bay':1200,'R_F':1000}
-transient_0={'Lorenz':1000,'Rossler':1000,'Henon':1000,'M_G':1000,'hadcet':852,'ECG5000':1000,'Lorenz_96':1000,'hyper_chaotic':1000,'ETTh1':720,'Metr_la':1440,#80*24*12
-'Pems_bay':5*24*12,'R_F':1000}#min}
-DT={'Lorenz':0.01,'Rossler':0.01,'Henon':1,'M_G':1,'hadcet':1,'ECG5000':1,'Lorenz_96':0.01,'hyper_chaotic':0.1,'ETTh1':1,'Metr_la':1,'Pems_bay':1,'R_F':0.01}
-#ECG 可以用于分类
-N_dim={'Lorenz':3,'Rossler':3,'Henon':2,'M_G':1,'hadcet':1,'ECG5000':140,'Lorenz_96':40,'hyper_chaotic':4,'ETTh1':7,'Metr_la':207,'Pems_bay':325,'R_F':3} 
+data_names = ['Lorenz', 'hyper_chaotic', 'hadcet', 'Pems_bay', 'Lorenz_96', 'ETTh1']
+Lyapunov_E = {'Lorenz': 0.895, 'hyper_chaotic': 3.03, 'hadcet': 1, 'Pems_bay': 1, 'Lorenz_96': 1.68, 'ETTh1': 1}
+Data_Length = {'Lorenz': 20000, 'hyper_chaotic': 20000, 'hadcet': 4343, 'Pems_bay': 52116, 'Lorenz_96': 20000, 'ETTh1': 17420}
+L_train_0 = {'Lorenz': 16000, 'hyper_chaotic': 16000, 'hadcet': 4260, 'Pems_bay': 10 * 24 * 12, 'Lorenz_96': 16000, 'ETTh1': 11520}
+L_test_0 = {'Lorenz': 2000, 'hyper_chaotic': 1000, 'hadcet': 83, 'Pems_bay': 1200, 'Lorenz_96': 20, 'ETTh1': 60}
+transient_0 = {'Lorenz': 1000, 'hyper_chaotic': 1000, 'hadcet': 852, 'Pems_bay': 5 * 24 * 12, 'Lorenz_96': 1000, 'ETTh1': 720}
+DT = {'Lorenz': 0.01, 'hyper_chaotic': 0.1, 'hadcet': 1, 'Pems_bay': 1, 'Lorenz_96': 0.01, 'ETTh1': 1}
+N_dim = {'Lorenz': 3, 'hyper_chaotic': 4, 'hadcet': 1, 'Pems_bay': 325, 'Lorenz_96': 40, 'ETTh1': 7}
 
 
 
