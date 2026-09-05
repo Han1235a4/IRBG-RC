@@ -42,18 +42,15 @@ $$
 * **Parameters:** $a = 8$, $b = 40$, $c = 15$, $d = -0.1$
 * **Initial State:** $[x_0, y_0, z_0, w_0]^T = [10, 1, 10, 1]^T$
 
-### 1. Lorenz-96 
+### 3. Lorenz-96 
 The Lorenz-96 system ($N=40$, $F=10$) is governed by the following differential equations and cyclic boundary conditions:
 
 $$
 \begin{cases} 
-\dot{x}_i = (x_{i+1} - x_{i-2})x_{i-1} - x_i + 10 \\ 
-x_{-1} = x_{39} \\ 
-x_0 = x_{40} \\ 
-x_{41} = x_1 
+\dot{x}_i = (x_{i+1} - x_{i-2})x_{i-1} - x_i + 10 
 \end{cases}
 $$
-where $i = 1, 2, \dots, 40$.
+where $x_{-1} = x_{39}$, $x_0 = x_{40}$, $x_{41} = x_1$  and $i = 1, 2, \dots, 40$.
 
 
 ## RC Variants and Hyperparameter Search Spaces
