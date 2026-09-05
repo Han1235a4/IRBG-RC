@@ -248,4 +248,4 @@ $$
 - **Lorenz-96**: A 40-dimensional synthetic chaotic dynamical system used for evaluating long-term chaotic forecasting.
 - **ETTh1**: A real-world multivariate time-series dataset containing 7 variables and 17,420 hourly observations.
 
-## **The five datasets and four RC variants used in this repository are described in detail in their corresponding references. **
+## The six datasets and four RC variants used in this repository are described in detail in their corresponding references. **
