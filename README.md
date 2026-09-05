@@ -104,3 +104,21 @@ $$
 |**ES<sup>2</sup>N** | $\{100,200,300,400,500\}$ | -- | $\{0.1,0.3,0.5,0.7,0.9,1.1,1.3,1.5\}$ | $\{1.0,0.1,0.01,0.001\}$ | -- | $\{0.001,0.01,0.1,1.0\}$ | $\{1.0,0.1,0.01,0.001\}$ |$\{-1,...,-0.1,0,0.1,...,1\}$ |
 | **MCI-ESN** | $\{100,200,300,400,500\}$ | -- | $\{0.1,0.3,0.5,0.7,0.9,1.1,1.3,1.5\}$ | $\{0.001,0.01,0.1,1.0\}$ | -- | -- | -- | $\{-1,...,-0.1,0,0.1,...,1\}$ |
 
+
+## Performance compare for two different datasets
+| Architectures | Datasets | Correlation $P$ | Minimum RMSE $\downarrow$ |  | VPT (Mean) $\uparrow$ |  | $p$-value |
+|:--------------|:---------|----------------:|--------------------------:|:--:|-----------------------:|:--:|----------:|
+| | | | **Random** | **IRBG** | **Random** | **IRBG** | |
+| **Typical RC** | Lorenz-96 | -- | -- | **--** | -- | **--** | -- |
+| | ETTh1 | -- | -- | **--** | -- | **--** | -- |
+| **Leaky RC** | Lorenz-96 | -- | -- | **--** | -- | **--** | -- |
+| | ETTh1 | -- | -- | **--** | -- | **--** | -- |
+| **DeepRC** | Lorenz-96 | -- | -- | **--** | -- | **--** | -- |
+| | ETTh1 | -- | -- | **--** | -- | **--** | -- |
+| **ES$^2$N** | Lorenz-96 | -- | -- | **--** | -- | **--** | -- |
+| | ETTh1 | -- | -- | **--** | -- | **--** | -- |
+| **MCI-ESN** | Lorenz-96 | -- | -- | **--** | -- | **--** | -- |
+| | ETTh1 | -- | -- | **--** | -- | **--** | -- |
+
+- **Lorenz-96**: A 40-dimensional synthetic chaotic dynamical system used for evaluating long-term chaotic forecasting.
+- **ETTh1**: A real-world multivariate time-series dataset containing 7 variables and 17,420 hourly observations.
