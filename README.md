@@ -46,8 +46,8 @@ $$
 The Lorenz-96 system ($N=40$, $F=10$) is governed by the following differential equations and cyclic boundary conditions:
 
 $$
-\begin{cases} 
-\dot{x}_i = (x_{i+1} - x_{i-2})x_{i-1} - x_i + 10  \\
+\begin{cases}
+\dot{x}_i = (x_{i+1} - x_{i-2})x_{i-1} - x_i + 10
 \end{cases}
 $$
 \\
