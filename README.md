@@ -167,6 +167,11 @@ $$
 * **Parameters:** $a = 8$, $b = 40$, $c = 15$, $d = -0.1$
 * **Initial State:** $[x_0, y_0, z_0, w_0]^T = [10, 1, 10, 1]^T$
 
+### 3. Lorenz-96
+The external forcing parameter $F=10$ and the system dimension $N=40$ applied as requested:
+$$\frac{dx_i}{dt} = (x_{i+1} - x_{i-2})x_{i-1} - x_i + 10$$
+where the state variable index is $i = 1, 2, \dots, 40$.To close the system at the boundaries, cyclic boundary conditions are applied:
+$x_{-1} = x_{39}$$x_0 = x_{40}$$x_{41} = x_1$
 
 ## RC Variants and Hyperparameter Search Spaces
 
@@ -246,6 +251,6 @@ $$
 | | ETTh1 | -0.1 | 4.86 | **3.66** | 8(8) | **10(8.13)** | 0.02 |
 
 - **Lorenz-96**: A 40-dimensional synthetic chaotic dynamical system used for evaluating long-term chaotic forecasting.
-- **ETTh1**: A real-world multivariate time-series dataset containing 7 variables and 17,420 hourly observations.
+- **ETTh1**: A real-world Electricity Transformer Temperature dataset containing 7 variables and 17,420 hourly observations. Electricity Transformer Temperature
 
 ## The six datasets and four RC variants used in this repository are described in detail in their corresponding references. **
