@@ -295,70 +295,58 @@ def get_node_properties(G, weight='weight'):
     return mass, d_matrix_dict
 def eigenvector_centrality_with_multiplicity(G, tol=1e-8):
     """
-    Compute eigenvector centrality while explicitly handling
-    multiplicity of the largest eigenvalue.
-
-    If the largest eigenvalue is simple, its corresponding eigenvector
-    is returned. If the largest eigenvalue is repeated, the corresponding
-    eigenvectors are averaged.
-
-    Parameters
-    ----------
-    G : nx.Graph
-        Undirected weighted graph.
-    tol : float
-        Tolerance used to identify repeated largest eigenvalues.
-
-    Returns
-    -------
-    centrality : dict
-        Eigenvector centrality of each node.
-    lambda_max : float
-        Largest eigenvalue.
-    multiplicity : int
-        Numerical multiplicity of the largest eigenvalue.
+    Compute eigenvector centrality using the normalized orthogonal
+    projection of the all-ones vector onto the dominant eigenspace.
+    This definition also provides a basis-invariant treatment when
+    the dominant eigenvalue has multiplicity greater than one.
     """
 
     nodes = list(G.nodes())
-    A = nx.to_numpy_array(G, nodelist=nodes, weight='weight', dtype=float)
 
-    # Since A is symmetric for an undirected graph, use eigh
+    A = nx.to_numpy_array(
+        G,
+        nodelist=nodes,
+        weight='weight',
+        dtype=float
+    )
+
+    # Eigen-decomposition of the symmetric adjacency matrix
     eigenvalues, eigenvectors = np.linalg.eigh(A)
 
-    # Sort eigenvalues in descending order
-    idx = np.argsort(eigenvalues)[::-1]
-    eigenvalues = eigenvalues[idx]
-    eigenvectors = eigenvectors[:, idx]
+    lambda_max = np.max(eigenvalues)
 
-    lambda_max = eigenvalues[0]
-
-    # Identify all eigenvalues numerically equal to lambda_max
+    # Dominant eigenspace
     repeated_idx = np.where(
-        np.isclose(eigenvalues, lambda_max, rtol=tol, atol=tol)
+        np.isclose(
+            eigenvalues,
+            lambda_max,
+            rtol=tol,
+            atol=tol
+        )
     )[0]
 
     multiplicity = len(repeated_idx)
 
-    # Corresponding eigenvectors
+    # Orthonormal basis of the dominant eigenspace
     V = eigenvectors[:, repeated_idx]
 
-    if multiplicity == 1:
-        centrality_vector = V[:, 0]
-    else:
-        # Average the eigenvectors corresponding to lambda_max
-        centrality_vector = np.mean(V, axis=1)
+    # Project the all-ones vector onto the dominant eigenspace
+    ones = np.ones(A.shape[0], dtype=float)
+    centrality_vector = V @ (V.T @ ones)
 
-    # Remove arbitrary global sign
-    if np.sum(centrality_vector) < 0:
-        centrality_vector = -centrality_vector
-
-    # Normalize
+    # L2 normalization
     norm = np.linalg.norm(centrality_vector)
-    if norm > 0:
-        centrality_vector = centrality_vector / norm
+
+    if norm <= tol:
+        raise ValueError(
+            "The projection onto the dominant eigenspace "
+            "is numerically zero."
+        )
+
+    centrality_vector /= norm
 
     centrality = {
-        node: centrality_vector[i]
+        node: float(centrality_vector[i])
         for i, node in enumerate(nodes)
     }
 
